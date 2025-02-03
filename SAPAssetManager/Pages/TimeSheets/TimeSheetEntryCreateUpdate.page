@@ -145,16 +145,35 @@
                         {
                             "_Name": "ManualOrderSwitch",
                             "_Type": "Control.Type.FormCell.Switch",
-                            "Caption": "$(L,zmanual_order)",
-                            "IsVisible": false,
+                            "Caption": "$(L,zmanual_entry)",
+                            "IsVisible": true,
                             "Value": false,
                             "OnValueChange": "/SAPAssetManager/Rules/WorkOrders/CreateUpdate/ZWorkOrderCreateUpdateManualEntry.js"
                         },
                         {
                             "_Name": "ManualOrderInput",
-                            "_Type": "Control.Type.FormCell.Note",
+                            "_Type": "Control.Type.FormCell.SimpleProperty",
                             "MaxNumberOfLines": 1,
+                            "OnValueChange":"/SAPAssetManager/Rules/WorkOrders/CreateUpdate/ZOnValueChangeManualOrderInput.js",
+                            "PlaceHolder": "$(L,workorder)",
                             "Caption": "$(L,workorder)",
+                            "IsVisible": false
+                        },
+                        {
+                            "_Name": "ManualOperationInput",
+                            "_Type": "Control.Type.FormCell.SimpleProperty",
+                            "MaxNumberOfLines": 1,
+                            "PlaceHolder": "$(L,operation)",
+                            "Caption": "$(L,operation)",
+                            "IsVisible": false
+                        },
+                        {
+                            "_Name": "ManualCostCenterInput",
+                           "_Type": "Control.Type.FormCell.SimpleProperty",
+                            "MaxNumberOfLines": 1,
+                            "PlaceHolder": "$(L,cost_center)",
+                            "Caption": "$(L,cost_center)",
+                            "OnValueChange":"/SAPAssetManager/Rules/WorkOrders/CreateUpdate/ZCostCenterOnvalueChange.js",
                             "IsVisible": false
                         },
                         {
@@ -182,7 +201,8 @@
                             "IsSearchCancelledAfterSelection": true,
                             "OnValueChange" : "/SAPAssetManager/Rules/TimeSheets/Entry/CreateUpdate/TimeSheetEntryCreateUpdateRecOrderUpdate.js",
                             "_Type": "Control.Type.FormCell.ListPicker",
-                            "_Name": "RecOrderLstPkr"
+                            "_Name": "RecOrderLstPkr",
+                            "IsVisible": true
                         },
                         {
                             "Caption": "$(L,operation)",

@@ -104,14 +104,17 @@ function createTimesheet(context, perno, hours, increment) {
                             "StartTime": "/SAPAssetManager/Rules/TimeSheets/CreateUpdate/ZTimeSheetCreateUpdateStartTime.js",
                             "EndTime": "/SAPAssetManager/Rules/TimeSheets/CreateUpdate/ZTimeSheetCreateUpdateEndTime.js",
                             'ZWageType': '/SAPAssetManager/Rules/TimeSheets/CreateUpdate/ZTimeSheetCreateUpdateZWageType.js',
-                            "ZPosition": "/SAPAssetManager/Rules/TimeSheets/CreateUpdate/ZTimeSheetCreateUpdateZPosition.js"
+                            "ZPosition": "/SAPAssetManager/Rules/TimeSheets/CreateUpdate/ZTimeSheetCreateUpdateZPosition.js",
+                            "RecOrder" :"/SAPAssetManager/Rules/TimeSheets/CreateUpdate/ZTimeSheetOrder.js",
+                            "ZRecCCtr" :"/SAPAssetManager/Rules/TimeSheets/CreateUpdate/ZTimeSheetCostCenter.js",
+                            "Operation": "/SAPAssetManager/Rules/TimeSheets/CreateUpdate/ZTimeSheetOperation.js"
                         },
                         'Headers': {
                             'OfflineOData.TransactionID': counter,
                             'OfflineOData.RemoveAfterUpload': 'true',
                         },
                         'CreateLinks': links,
-                        'OnSuccess': '',
+                        'OnSuccess': '/SAPAssetManager/Rules/ClockInClockOut/TimeSheets/TimeSheetSuccess.js',
                         'OnFailure': '',
                     }
                 }).then((result) => {
