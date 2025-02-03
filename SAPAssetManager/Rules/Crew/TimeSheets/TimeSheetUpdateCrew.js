@@ -23,16 +23,17 @@ export default function TimeSheetUpdateCrew(context) {
 
             context.getClientData().TotalCatsHours = (existingDuration - originalDuration) + newDuration;
             //update the corresponding CrewListItem
-            return context.executeAction('/SAPAssetManager/Actions/Crew/CrewListItemEmployeeUpdate.action').then(() => {
-                if (IsCompleteAction(context)) {
-                    WorkOrderCompletionLibrary.updateStepState(context, 'time', {
-                        data: JSON.stringify(context.binding),
-                        value: ConvertDoubleToHourString(GetDuration(context)),
-                    });
-                    return WorkOrderCompletionLibrary.getInstance().openMainPage(context);
-                }
-                return ExecuteActionWithAutoSync(context, '/SAPAssetManager/Actions/TimeSheets/TimeSheetEntrySuccessMessage.action');
-            });
+            return ExecuteActionWithAutoSync(context, '/SAPAssetManager/Actions/TimeSheets/TimeSheetEntrySuccessMessage.action');
+            // return context.executeAction('/SAPAssetManager/Actions/Crew/CrewListItemEmployeeUpdate.action').then(() => {
+            //     if (IsCompleteAction(context)) {
+            //         WorkOrderCompletionLibrary.updateStepState(context, 'time', {
+            //             data: JSON.stringify(context.binding),
+            //             value: ConvertDoubleToHourString(GetDuration(context)),
+            //         });
+            //         return WorkOrderCompletionLibrary.getInstance().openMainPage(context);
+            //     }
+            //     return ExecuteActionWithAutoSync(context, '/SAPAssetManager/Actions/TimeSheets/TimeSheetEntrySuccessMessage.action');
+            // });
         } else {
             return ExecuteActionWithAutoSync(context, '/SAPAssetManager/Actions/TimeSheets/TimeSheetEntrySuccessMessage.action');
         }

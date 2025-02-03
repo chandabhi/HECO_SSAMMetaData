@@ -210,6 +210,29 @@ export class TimeSheetEventLibrary {
             // .then(libTSEvent.ValidateStartBeforeFinish.bind(null, pageClientAPI, dict), null)
             // .then(libTSEvent.ValidateHoursNonZero.bind(null, pageClientAPI, dict), null)
             // .then(libTSEvent.ValidateActivityTypeIfRecOrder.bind(null, pageClientAPI, dict), null) //HECO defaulting ActivityType in CATS
+        let page = `#Page:${pageClientAPI.getPageProxy().currentPage.id}`;
+        if(pageClientAPI.evaluateTargetPath(`${page}`)&&!pageClientAPI.evaluateTargetPath(`${page}/#Control:ManualCostCenterInput`).getValue()&&(dict.OperationLstPkr||!dict.RecOrderLstPkr)){
+            if(!dict.OperationLstPkr){
+                let control = page+"/#Control:ManualOperationInput";
+                dict.OperationLstPkr = pageClientAPI.evaluateTargetPath(`${control}`).getValue();
+            }
+            if(!dict.RecOrderLstPkr){
+                let control  = page+"/#Control:ManualOrderInput";
+                dict.RecOrderLstPkr = pageClientAPI.evaluateTargetPath(`${control}`).getValue();
+            }
+            return libTSEvent.ValidateHoursNonZero(pageClientAPI, dict)
+            .then(libTSEvent.ValidateOperationIfRecOrder.bind(null, pageClientAPI, dict), null)
+            .then(libTSEvent.ValidateWorkorderRequired.bind(null, pageClientAPI, dict), null)
+            .then(libTSEvent.ValidateAbsAttOrActivityType.bind(null, pageClientAPI, dict), null)
+            .then(function() {
+                return true;
+            }, function() {
+                return false;
+            });
+        }
+        if(pageClientAPI.evaluateTargetPath(`${page}/#Control:ManualCostCenterInput`).getValue()){
+            return libTSEvent.ValidateManualCostCenterInput(pageClientAPI, dict)
+        }
         return libTSEvent.ValidateHoursNonZero(pageClientAPI, dict)
             .then(libTSEvent.ValidateOperationIfRecOrder.bind(null, pageClientAPI, dict), null)
             .then(libTSEvent.ValidateWorkorderRequired.bind(null, pageClientAPI, dict), null)
@@ -249,6 +272,30 @@ export class TimeSheetEventLibrary {
         dict.ZWageTypeLstPkr = libCom.getListPickerValue(dict.ZWageTypeLstPkr);
 
         // return libTSEvent.ValidateTotalHoursLessThan24(pageClientAPI, dict)
+        let page = `#Page:${pageClientAPI.getPageProxy().currentPage.id}`;
+        
+        if(pageClientAPI.evaluateTargetPath(`${page}`)&&!pageClientAPI.evaluateTargetPath(`${page}/#Control:ManualCostCenterInput`).getValue()&&(dict.OperationLstPkr||!dict.RecOrderLstPkr)){
+            if(!dict.OperationLstPkr){
+                let control = page+"/#Control:ManualOperationInput";
+                dict.OperationLstPkr = pageClientAPI.evaluateTargetPath(`${control}`).getValue();
+            }
+            if(!dict.RecOrderLstPkr){
+                let control  = page+"/#Control:ManualOrderInput";
+                dict.RecOrderLstPkr = pageClientAPI.evaluateTargetPath(`${control}`).getValue();
+            }
+            return libTSEvent.ValidateHoursNonZero(pageClientAPI, dict)
+            .then(libTSEvent.ValidateOperationIfRecOrder.bind(null, pageClientAPI, dict), null)
+            .then(libTSEvent.ValidateWorkorderRequired.bind(null, pageClientAPI, dict), null)
+            .then(libTSEvent.ValidateAbsAttOrActivityType.bind(null, pageClientAPI, dict), null)
+            .then(function() {
+                return true;
+            }, function() {
+                return false;
+            });
+        }
+        if(pageClientAPI.evaluateTargetPath(`${page}/#Control:ManualCostCenterInput`)&&pageClientAPI.evaluateTargetPath(`${page}/#Control:ManualCostCenterInput`).getValue()){
+            return libTSEvent.ValidateManualCostCenterInput(pageClientAPI, dict)
+        }
         return libTSEvent.ValidateHoursNonZero(pageClientAPI, dict)
             // .then(libTSEvent.ValidateStartBeforeFinish.bind(null, pageClientAPI, dict), null)
             // .then(libTSEvent.ValidateOnEditFutureDate.bind(null, pageClientAPI, dict), null)
@@ -388,6 +435,23 @@ export class TimeSheetEventLibrary {
             return Promise.resolve(true);
         } else {
             return pageClientAPI.executeAction('/SAPAssetManager/Actions/TimeSheets/ErrorDialogs/AbsAttRequiredError.action').then(function() {
+                return Promise.reject(false);
+            });
+        }
+    }
+    static ValidateManualCostCenterInput(pageClientAPI, dict) {
+        //HECO
+        //Most Wage Types do not require Absence or Activity Type
+        let ManualCostCenterInput;
+        let listPickerValue = pageClientAPI.getPageProxy().getControl('FormCellContainer').getControl('ManualCostCenterInput').getValue();
+        if(listPickerValue.length > 1) {
+            ManualCostCenterInput = listPickerValue;
+        }
+        
+        if (ManualCostCenterInput) { //HECO Wage types don't allow use of attendance codes
+            return Promise.resolve(true);
+        } else {
+            return pageClientAPI.executeAction('/SAPAssetManager/Actions/TimeSheets/ErrorDialogs/ManualCostCenterInputRequiredError.action').then(function() {
                 return Promise.reject(false);
             });
         }

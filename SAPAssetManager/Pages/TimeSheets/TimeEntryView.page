@@ -71,6 +71,10 @@
                         {
                             "KeyName": "$(L,workcenter)",
                             "Value": "{Workcenter}"
+                        },
+                        {
+                            "KeyName": "$(L,cost_center)",
+                            "Value": "/SAPAssetManager/Rules/TimeSheets/Entry/View/ZTimeEntryViewCostCenter.js"
                         }
                     ]
 				}

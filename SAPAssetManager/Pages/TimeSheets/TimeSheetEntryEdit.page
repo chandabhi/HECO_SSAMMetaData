@@ -88,7 +88,6 @@
                             "IsEditable": "/SAPAssetManager/Rules/TimeSheets/Entry/CreateUpdate/ZTimeSheetEntryEditEnableTime.js",
                             "Value": "/SAPAssetManager/Rules/TimeSheets/Entry/CreateUpdate/ZTimeSheetEntryEditEndTime.js"
                         },
-                        
                         {
                             "Caption": "$(L,absence_attendance_code)",
                             "Search": {
@@ -119,6 +118,35 @@
                             "Value": "{AttendAbsenceType}"
                         },
                         {
+                            "_Name": "ManualOrderInput",
+                            "_Type": "Control.Type.FormCell.SimpleProperty",
+                            "MaxNumberOfLines": 1,
+                            "OnValueChange":"/SAPAssetManager/Rules/WorkOrders/CreateUpdate/ZOnValueChangeManualOrderInput.js",
+                            "PlaceHolder": "$(L,workorder)",
+                            "Caption": "$(L,workorder)",
+                            "Value": "/SAPAssetManager/Rules/WorkOrders/CreateUpdate/ZValueManualOrderInput.js",
+                            "IsVisible": "/SAPAssetManager/Rules/WorkOrders/CreateUpdate/ZVisibleManualOrderInput.js"
+                        },
+                        {
+                            "_Name": "ManualOperationInput",
+                            "_Type": "Control.Type.FormCell.SimpleProperty",
+                            "MaxNumberOfLines": 1,
+                            "PlaceHolder": "$(L,operation)",
+                            "Caption": "$(L,operation)",
+                            "Value": "/SAPAssetManager/Rules/WorkOrders/CreateUpdate/ZValueManualOperationInput.js",
+                            "IsVisible": "/SAPAssetManager/Rules/WorkOrders/CreateUpdate/ZVisibleManualOperationInput.js"
+                        },
+                        {
+                            "_Name": "ManualCostCenterInput",
+                           "_Type": "Control.Type.FormCell.SimpleProperty",
+                            "MaxNumberOfLines": 1,
+                            "PlaceHolder": "$(L,cost_center)",
+                            "Caption": "$(L,cost_center)",
+                            "OnValueChange":"/SAPAssetManager/Rules/WorkOrders/CreateUpdate/ZCostCenterOnvalueChange.js",
+                            "Value": "/SAPAssetManager/Rules/WorkOrders/CreateUpdate/ZValueCostCent.js",
+                            "IsVisible": "/SAPAssetManager/Rules/WorkOrders/CreateUpdate/ZVisibleCostCent.js"
+                        },
+                        {
                             "Caption": "$(L,workorder)",
                             "Search": {
                                 "Enabled": true,
@@ -145,6 +173,7 @@
                             "IsEditable": "/SAPAssetManager/Rules/TimeSheets/Entry/CreateUpdate/ZTimeSheetEntryEditEnableTime.js",
                             "_Type": "Control.Type.FormCell.ListPicker",
                             "_Name": "RecOrderLstPkr",
+                            "IsVisible": "/SAPAssetManager/Rules/TimeSheets/Entry/CreateUpdate/ZTimeSheetEntryRecOrderVisible.js",
                             "Value": "/SAPAssetManager/Rules/TimeSheets/Entry/CreateUpdate/TimeSheetEntryEditRecOrderValue.js"
                         },
                         {
@@ -172,6 +201,7 @@
                             },
                             "OnValueChange": "/SAPAssetManager/Rules/TimeSheets/Entry/CreateUpdate/TimeSheetEntryCreateUpdateOperationUpdate.js",
                             "IsEditable": "/SAPAssetManager/Rules/TimeSheets/Entry/CreateUpdate/ZTimeSheetEntryEditEnableTime.js",
+                            "IsVisible": "/SAPAssetManager/Rules/TimeSheets/Entry/CreateUpdate/ZTimeSheetEntryOperationLstPkrVisible.js",
                             "_Type": "Control.Type.FormCell.ListPicker",
                             "_Name": "OperationLstPkr",
                             "Value": "/SAPAssetManager/Rules/TimeSheets/Entry/CreateUpdate/TimeSheetEntryEditOperationValue.js"
